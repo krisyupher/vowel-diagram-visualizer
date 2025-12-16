@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vowel Diagram Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Vowel Pronunciation Path Visualizer</h1>
+            <p>See how vowels move through articulatory space across languages</p>
+        </header>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="language-select">Language:</label>
+                <select id="language-select">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="es">🇪🇸 Spanish</option>
+                    <option value="fr">🇫🇷 French</option>
+                    <option value="de">🇩🇪 German</option>
+                    <option value="it">🇮🇹 Italian</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="word-input">Enter a word:</label>
+                <input type="text" id="word-input" placeholder="Type a word...">
+                <button id="visualize-btn">Visualize</button>
+            </div>
+
+            <div id="phonetic-display"></div>
+        </div>
+
+        <div class="diagram-container">
+            <div class="axis-labels">
+                <div class="label-top">
+                    <span>Front</span>
+                    <span>Central</span>
+                    <span>Back</span>
+                </div>
+                <div class="label-left">
+                    <span>Close</span>
+                    <span>Mid</span>
+                    <span>Open</span>
+                </div>
+            </div>
+            <svg id="vowel-diagram" width="600" height="400">
+                <!-- Anatomical mouth/vocal tract silhouette (sagittal view) -->
+                <g id="mouth-silhouette" opacity="0.12" fill="#d4a373">
+                    <!-- Head outline -->
+                    <ellipse cx="350" cy="200" rx="200" ry="180" fill="#f4d4b3" opacity="0.3"/>
+
+                    <!-- Nasal cavity -->
+                    <path d="M 180 120 Q 220 100, 280 90 Q 320 85, 360 90 L 360 140 Q 320 135, 280 140 Q 220 145, 180 150 Z"
+                          fill="#ffc0cb" opacity="0.4"/>
+
+                    <!-- Upper outline: nose, upper lip, hard palate, soft palate, pharynx wall -->
+                    <path d="M 100 180
+                             L 80 200 Q 70 220, 75 240
+                             L 85 260 Q 88 270, 95 275
+                             L 120 280
+                             Q 180 260, 250 220
+                             Q 320 180, 380 150
+                             Q 420 130, 450 120
+                             Q 470 115, 490 120
+                             L 520 140
+                             Q 535 160, 540 190
+                             L 545 240
+                             Q 543 280, 535 310
+                             L 520 340"
+                          stroke="#8b6f47" stroke-width="2.5" fill="none"/>
+
+                    <!-- Lower outline: lower lip, jaw, throat -->
+                    <path d="M 95 285
+                             Q 92 295, 88 305
+                             L 82 320
+                             Q 78 340, 85 360
+                             L 110 375
+                             Q 180 385, 260 380
+                             Q 340 375, 400 365
+                             Q 450 355, 490 345
+                             L 520 340"
+                          stroke="#8b6f47" stroke-width="2.5" fill="none"/>
+
+                    <!-- Teeth (upper) -->
+                    <rect x="85" y="268" width="35" height="12" fill="white" stroke="#999" stroke-width="1" rx="2"/>
+
+                    <!-- Teeth (lower) -->
+                    <rect x="85" y="285" width="35" height="12" fill="white" stroke="#999" stroke-width="1" rx="2"/>
+
+                    <!-- Tongue cavity/resting space -->
+                    <path d="M 120 300 Q 220 280, 320 270 Q 420 265, 500 275"
+                          fill="none" stroke="#bbb" stroke-width="2" stroke-dasharray="4,4" opacity="0.5"/>
+                </g>
+
+                <!-- Trapezoid outline -->
+                <polygon id="trapezoid" points="100,50 500,50 550,350 50,350"
+                         fill="none" stroke="#333" stroke-width="2"/>
+                <!-- Grid lines will be added by JS -->
+                <g id="grid-lines"></g>
+                <!-- Vowel points will be added by JS -->
+                <g id="vowel-points"></g>
+                <!-- Animation path -->
+                <g id="animation-layer"></g>
+            </svg>
+        </div>
+
+        <div class="info-panel">
+            <h3>Current Language: <span id="current-lang">English</span></h3>
+            <div id="vowel-info"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
